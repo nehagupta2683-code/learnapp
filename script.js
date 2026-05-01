@@ -112,12 +112,18 @@ const app = {
         
         document.getElementById('call-tutor-img').src = imgUrl;
 
+        // Generate greeting based on language
+        let greeting = "¡Hola! Ready to practice your Spanish? How are you today?";
+        if (this.currentLanguage === 'French') greeting = "Bonjour! Ready to practice your French? Comment ça va aujourd'hui?";
+        else if (this.currentLanguage === 'German') greeting = "Hallo! Ready to practice your German? Wie geht es dir heute?";
+        else if (this.currentLanguage === 'English') greeting = "Hello! Ready to practice your English? How are you today?";
+
         // Reset Chat
         const chatArea = document.getElementById('chat-messages');
         chatArea.innerHTML = `
             <div class="message ai-message fade-in-up">
-                <p>¡Hola! Ready to practice your ${this.currentLanguage || 'Spanish'}? How are you today?</p>
-                <button class="msg-audio-btn"><i class="fa-solid fa-volume-high"></i></button>
+                <p>${greeting}</p>
+                <button class="msg-audio-btn" onclick="app.speakText('${greeting}')"><i class="fa-solid fa-volume-high"></i></button>
             </div>
         `;
 
@@ -224,6 +230,31 @@ const app = {
                         <p style="font-size: 0.8rem; margin-top: 5px; color: #cbd5e1;">Use 'estoy bien' for temporary feelings.</p>
                     </div>
                 `);
+            } else if (text.toLowerCase().includes('good') && this.currentLanguage === 'French') {
+                 chatArea.insertAdjacentHTML('beforeend', `
+                    <div class="feedback-box fade-in-up">
+                        <div class="feedback-header">
+                            <span><i class="fa-solid fa-language"></i> Translation & Correction</span>
+                            <span class="pronunciation-score">Pronunciation: 88%</span>
+                        </div>
+                        <p style="color:var(--text-secondary); font-size: 0.9rem;">
+                            <del style="color:var(--error)">I am good</del> 
+                            <i class="fa-solid fa-arrow-right mx-2"></i> 
+                            <ins style="color:var(--success)">Je vais bien</ins>
+                        </p>
+                        <p style="font-size: 0.8rem; margin-top: 5px; color: #cbd5e1;">In French, we say "I go well" rather than "I am good".</p>
+                    </div>
+                `);
+            } else if (text.toLowerCase().includes('hello') || text.toLowerCase().includes('good')) {
+                 chatArea.insertAdjacentHTML('beforeend', `
+                    <div class="feedback-box fade-in-up">
+                        <div class="feedback-header">
+                            <span class="text-green"><i class="fa-solid fa-language"></i> English Detected</span>
+                            <span class="pronunciation-score">Pronunciation: 95%</span>
+                        </div>
+                        <p style="font-size: 0.8rem; margin-top: 5px; color: #cbd5e1;">Try to answer in ${this.currentLanguage} to improve your fluency!</p>
+                    </div>
+                `);
             } else {
                  chatArea.insertAdjacentHTML('beforeend', `
                     <div class="feedback-box fade-in-up">
@@ -238,7 +269,21 @@ const app = {
             // 4. AI Response
             setTimeout(() => {
                 let aiResponseText = "¡Muy bien! Sigue practicando.";
-                if (text.toLowerCase().includes('hola')) aiResponseText = "¡Hola! Qué gusto escucharte.";
+                
+                // Dynamic responses based on language
+                if (this.currentLanguage === 'French') {
+                    aiResponseText = "Très bien ! Continuez à pratiquer.";
+                    if (text.toLowerCase().includes('bonjour') || text.toLowerCase().includes('hello')) aiResponseText = "Bonjour ! Quel plaisir de vous entendre.";
+                } else if (this.currentLanguage === 'German') {
+                    aiResponseText = "Sehr gut! Übe weiter.";
+                    if (text.toLowerCase().includes('hallo') || text.toLowerCase().includes('hello')) aiResponseText = "Hallo! Schön, dich zu hören.";
+                } else if (this.currentLanguage === 'English') {
+                    aiResponseText = "Very good! Keep practicing.";
+                    if (text.toLowerCase().includes('hello') || text.toLowerCase().includes('hi')) aiResponseText = "Hello! It's great to hear from you.";
+                } else {
+                    // Spanish default
+                    if (text.toLowerCase().includes('hola') || text.toLowerCase().includes('hello')) aiResponseText = "¡Hola! Qué gusto escucharte.";
+                }
                 
                 chatArea.insertAdjacentHTML('beforeend', `
                     <div class="message ai-message fade-in-up">
