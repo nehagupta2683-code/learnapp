@@ -201,6 +201,7 @@ const app = {
 
     processUserMessage(text) {
         const chatArea = document.getElementById('chat-messages');
+        const lowerText = text.toLowerCase();
         
         // 1. Add user message
         chatArea.insertAdjacentHTML('beforeend', `
@@ -214,8 +215,12 @@ const app = {
         document.querySelector('.status-text').innerText = "Typing...";
 
         setTimeout(() => {
-            // 3. Simulated Feedback (Grammar + Pronunciation)
-            if (text.toLowerCase().includes('bueno')) {
+            let aiResponseText = "";
+
+            // 3. Simulated Translation & Correction Logic
+            const isEnglishWord = lowerText.includes('hello') || lowerText.includes('good') || lowerText.includes('how') || lowerText.includes('i am') || lowerText.includes('what');
+            
+            if (lowerText.includes('bueno') && this.currentLanguage === 'Spanish') {
                 chatArea.insertAdjacentHTML('beforeend', `
                     <div class="feedback-box fade-in-up">
                         <div class="feedback-header">
@@ -230,29 +235,45 @@ const app = {
                         <p style="font-size: 0.8rem; margin-top: 5px; color: #cbd5e1;">Use 'estoy bien' for temporary feelings.</p>
                     </div>
                 `);
-            } else if (text.toLowerCase().includes('good') && this.currentLanguage === 'French') {
+                aiResponseText = "¡Casi perfecto! Recuerda la diferencia entre ser y estar.";
+            } 
+            else if (isEnglishWord) {
+                // Feature: Typing in English to get the Target Language answer
+                let translatedAns = "";
+                let explanation = "";
+                
+                if (this.currentLanguage === 'Spanish') {
+                    if (lowerText.includes('how are you')) { translatedAns = "¿Cómo estás?"; explanation = "This is the informal way to ask someone how they are."; }
+                    else if (lowerText.includes('good')) { translatedAns = "Bien"; explanation = "Use 'bien' for good, and 'estoy bien' for 'I am good'."; }
+                    else if (lowerText.includes('hello')) { translatedAns = "¡Hola!"; explanation = "A friendly greeting used at any time of day."; }
+                    else { translatedAns = "Eso se dice en español..."; explanation = "Try to use the vocabulary you learned in Unit 1."; }
+                    aiResponseText = "¡Intenta decirlo en español! Repite conmigo: " + translatedAns;
+                } 
+                else if (this.currentLanguage === 'French') {
+                    if (lowerText.includes('how are you')) { translatedAns = "Comment ça va ?"; explanation = "A common, casual way to ask how it's going."; }
+                    else if (lowerText.includes('good')) { translatedAns = "Je vais bien"; explanation = "In French, we say 'I go well' rather than 'I am good'."; }
+                    else if (lowerText.includes('hello')) { translatedAns = "Bonjour !"; explanation = "Used during the daytime."; }
+                    else { translatedAns = "En français, s'il vous plaît."; explanation = "Let's practice your French!"; }
+                    aiResponseText = "Essayons en français ! Répétez : " + translatedAns;
+                }
+                else {
+                    translatedAns = "Please try to speak in your target language!";
+                    aiResponseText = "Let's stick to the language we are practicing!";
+                }
+
                  chatArea.insertAdjacentHTML('beforeend', `
                     <div class="feedback-box fade-in-up">
                         <div class="feedback-header">
-                            <span><i class="fa-solid fa-language"></i> Translation & Correction</span>
-                            <span class="pronunciation-score">Pronunciation: 88%</span>
+                            <span class="text-accent"><i class="fa-solid fa-language"></i> Translation</span>
                         </div>
                         <p style="color:var(--text-secondary); font-size: 0.9rem;">
-                            <del style="color:var(--error)">I am good</del> 
-                            <i class="fa-solid fa-arrow-right mx-2"></i> 
-                            <ins style="color:var(--success)">Je vais bien</ins>
+                            <span style="color:var(--text-primary)">You said: "${text}"</span>
+                            <br>
+                            <i class="fa-solid fa-arrow-down my-2" style="margin: 8px 0; color: #cbd5e1;"></i> 
+                            <br>
+                            <ins style="color:var(--success); font-size: 1.1rem;">${translatedAns}</ins>
                         </p>
-                        <p style="font-size: 0.8rem; margin-top: 5px; color: #cbd5e1;">In French, we say "I go well" rather than "I am good".</p>
-                    </div>
-                `);
-            } else if (text.toLowerCase().includes('hello') || text.toLowerCase().includes('good')) {
-                 chatArea.insertAdjacentHTML('beforeend', `
-                    <div class="feedback-box fade-in-up">
-                        <div class="feedback-header">
-                            <span class="text-green"><i class="fa-solid fa-language"></i> English Detected</span>
-                            <span class="pronunciation-score">Pronunciation: 95%</span>
-                        </div>
-                        <p style="font-size: 0.8rem; margin-top: 5px; color: #cbd5e1;">Try to answer in ${this.currentLanguage} to improve your fluency!</p>
+                        <p style="font-size: 0.8rem; margin-top: 8px; color: #cbd5e1;">${explanation}</p>
                     </div>
                 `);
             } else {
@@ -264,31 +285,20 @@ const app = {
                         </div>
                     </div>
                  `);
+                 
+                 // Default good responses
+                 if (this.currentLanguage === 'French') aiResponseText = "Très bien ! Continuez à pratiquer.";
+                 else if (this.currentLanguage === 'German') aiResponseText = "Sehr gut! Übe weiter.";
+                 else if (this.currentLanguage === 'English') aiResponseText = "Very good! Keep practicing.";
+                 else aiResponseText = "¡Muy bien! Sigue practicando.";
             }
 
-            // 4. AI Response
+            // 4. AI Response Speech
             setTimeout(() => {
-                let aiResponseText = "¡Muy bien! Sigue practicando.";
-                
-                // Dynamic responses based on language
-                if (this.currentLanguage === 'French') {
-                    aiResponseText = "Très bien ! Continuez à pratiquer.";
-                    if (text.toLowerCase().includes('bonjour') || text.toLowerCase().includes('hello')) aiResponseText = "Bonjour ! Quel plaisir de vous entendre.";
-                } else if (this.currentLanguage === 'German') {
-                    aiResponseText = "Sehr gut! Übe weiter.";
-                    if (text.toLowerCase().includes('hallo') || text.toLowerCase().includes('hello')) aiResponseText = "Hallo! Schön, dich zu hören.";
-                } else if (this.currentLanguage === 'English') {
-                    aiResponseText = "Very good! Keep practicing.";
-                    if (text.toLowerCase().includes('hello') || text.toLowerCase().includes('hi')) aiResponseText = "Hello! It's great to hear from you.";
-                } else {
-                    // Spanish default
-                    if (text.toLowerCase().includes('hola') || text.toLowerCase().includes('hello')) aiResponseText = "¡Hola! Qué gusto escucharte.";
-                }
-                
                 chatArea.insertAdjacentHTML('beforeend', `
                     <div class="message ai-message fade-in-up">
                         <p>${aiResponseText}</p>
-                        <button class="msg-audio-btn" onclick="app.speakText('${aiResponseText}')"><i class="fa-solid fa-volume-high"></i></button>
+                        <button class="msg-audio-btn" onclick="app.speakText('${aiResponseText.replace(/"/g, '&quot;')}')"><i class="fa-solid fa-volume-high"></i></button>
                     </div>
                 `);
                 document.querySelector('.status-text').innerText = "Online";
