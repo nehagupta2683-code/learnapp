@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Learna AI - Speak & Learn Languages</title>
+    <meta name="description" content="Practice speaking languages with your personal AI tutor. No fear, just fluent conversations.">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Mobile App Container -->
+    <div id="app-container">
+        
+        <!-- Onboarding View -->
+        <section id="onboarding-view" class="view active full-screen-view">
+            <div class="onboarding-content">
+                <div class="logo-large">
+                    <i class="fa-solid fa-language icon-gradient"></i>
+                    <h2>LearnaAI</h2>
+                </div>
+                <h1 class="fade-in-up delay-1">What do you want to learn?</h1>
+                
+                <div class="options-list fade-in-up delay-2">
+                    <button class="option-btn" onclick="app.selectLanguage('Spanish')">🇪🇸 Spanish</button>
+                    <button class="option-btn" onclick="app.selectLanguage('French')">🇫🇷 French</button>
+                    <button class="option-btn" onclick="app.selectLanguage('English')">🇺🇸 English</button>
+                    <button class="option-btn" onclick="app.selectLanguage('German')">🇩🇪 German</button>
+                </div>
+            </div>
+            
+            <div id="level-selection" class="onboarding-content hidden">
+                <h1>What's your current level?</h1>
+                <div class="options-list">
+                    <button class="option-btn" onclick="app.completeOnboarding('Beginner')">🌱 Beginner</button>
+                    <button class="option-btn" onclick="app.completeOnboarding('Intermediate')">🌿 Intermediate</button>
+                    <button class="option-btn" onclick="app.completeOnboarding('Advanced')">🌳 Advanced</button>
+                </div>
+            </div>
+            
+            <div id="building-plan" class="onboarding-content hidden">
+                <div class="spinner"></div>
+                <h2>Building your personalized learning path...</h2>
+            </div>
+        </section>
+
+        <!-- Main App Views -->
+        <div id="main-app" class="hidden">
+            
+            <!-- Home / Path View (Duolingo Style) -->
+            <section id="home-view" class="view main-view">
+                <header class="top-header glass-header">
+                    <div class="streak-badge"><i class="fa-solid fa-fire text-orange"></i> 3</div>
+                    <div class="language-badge">🇪🇸 ES</div>
+                    <div class="gems-badge"><i class="fa-solid fa-gem text-accent"></i> 120</div>
+                </header>
+                
+                <div class="path-container">
+                    <!-- Unit Header -->
+                    <div class="unit-header gradient-bg">
+                        <h3>Unit 1</h3>
+                        <p>Basic Greetings & Introductions</p>
+                    </div>
+                    
+                    <!-- Path Nodes -->
+                    <div class="path-nodes">
+                        <div class="node-wrapper completed left-1">
+                            <button class="node-btn"><i class="fa-solid fa-star"></i></button>
+                        </div>
+                        <div class="node-wrapper completed right-1">
+                            <button class="node-btn"><i class="fa-solid fa-star"></i></button>
+                        </div>
+                        <div class="node-wrapper current left-1" onclick="app.openLessonModal('Greeting a Friend')">
+                            <div class="node-tooltip">Start</div>
+                            <button class="node-btn"><i class="fa-solid fa-play"></i></button>
+                        </div>
+                        <div class="node-wrapper locked right-1">
+                            <button class="node-btn"><i class="fa-solid fa-lock"></i></button>
+                        </div>
+                        <div class="node-wrapper locked center chest">
+                            <button class="node-btn"><i class="fa-solid fa-treasure-chest"></i></button>
+                        </div>
+                    </div>
+                    
+                    <!-- Unit Header 2 -->
+                    <div class="unit-header gradient-bg-alt">
+                        <h3>Unit 2</h3>
+                        <p>Ordering Food & Drinks</p>
+                    </div>
+                    
+                    <div class="path-nodes">
+                         <div class="node-wrapper locked left-1">
+                            <button class="node-btn"><i class="fa-solid fa-lock"></i></button>
+                        </div>
+                         <div class="node-wrapper locked right-1">
+                            <button class="node-btn"><i class="fa-solid fa-lock"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tutors View -->
+            <section id="tutors-view" class="view main-view">
+                <header class="top-header glass-header">
+                    <h2>AI Tutors</h2>
+                </header>
+                <div class="scroll-container">
+                    <p class="section-desc">Choose a persona to practice conversations.</p>
+                    <div class="tutors-list">
+                        <div class="tutor-card glass-panel" onclick="app.startPractice('Learna', 'Default')">
+                            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80" alt="Learna">
+                            <div class="tutor-info">
+                                <h3>Learna</h3>
+                                <p class="role">Your Personal AI Tutor</p>
+                                <span class="badge">Adaptive</span>
+                            </div>
+                        </div>
+                        <div class="tutor-card glass-panel" onclick="app.startPractice('Mateo', 'Casual')">
+                            <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80" alt="Mateo">
+                            <div class="tutor-info">
+                                <h3>Mateo</h3>
+                                <p class="role">The Casual Friend</p>
+                                <span class="badge">Slang</span>
+                            </div>
+                        </div>
+                        <div class="tutor-card glass-panel" onclick="app.startPractice('Sofia', 'Strict')">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80" alt="Sofia">
+                            <div class="tutor-info">
+                                <h3>Sofia</h3>
+                                <p class="role">The Strict Examiner</p>
+                                <span class="badge">Grammar Focus</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Progress View -->
+            <section id="progress-view" class="view main-view">
+                <header class="top-header glass-header">
+                    <h2>My Progress</h2>
+                </header>
+                <div class="scroll-container p-4">
+                    <div class="stats-grid">
+                        <div class="stat-box glass-panel text-center">
+                            <h2 class="text-orange">3</h2>
+                            <p>Day Streak</p>
+                        </div>
+                        <div class="stat-box glass-panel text-center">
+                            <h2 class="text-accent">120</h2>
+                            <p>Words Learned</p>
+                        </div>
+                    </div>
+                    
+                    <h3 class="mt-4 mb-2">Fluency Score</h3>
+                    <div class="glass-panel p-4 mb-4">
+                        <div class="score-circle">
+                            <span class="score">78%</span>
+                        </div>
+                        <div class="skills-breakdown mt-4">
+                            <div class="skill-row">
+                                <span>Pronunciation</span>
+                                <div class="bar-bg"><div class="bar-fill" style="width: 85%; background: var(--success);"></div></div>
+                            </div>
+                            <div class="skill-row">
+                                <span>Grammar</span>
+                                <div class="bar-bg"><div class="bar-fill" style="width: 65%; background: var(--warning);"></div></div>
+                            </div>
+                            <div class="skill-row">
+                                <span>Vocabulary</span>
+                                <div class="bar-bg"><div class="bar-fill" style="width: 75%; background: var(--accent-color);"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Bottom Navigation -->
+            <nav class="bottom-nav glass-header">
+                <button class="nav-btn active" data-target="home-view">
+                    <i class="fa-solid fa-map"></i>
+                    <span>Path</span>
+                </button>
+                <button class="nav-btn" data-target="tutors-view">
+                    <i class="fa-solid fa-users"></i>
+                    <span>Tutors</span>
+                </button>
+                <button class="nav-btn" data-target="progress-view">
+                    <i class="fa-solid fa-chart-pie"></i>
+                    <span>Progress</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Chat / Practice Full Screen View -->
+        <section id="chat-view" class="view full-screen-view hidden">
+            <header class="chat-header glass-header">
+                <button class="btn-icon" onclick="app.closePractice()"><i class="fa-solid fa-xmark"></i></button>
+                <div class="active-tutor-info">
+                    <h3 id="active-tutor-name">Learna</h3>
+                    <span class="status-text text-green">Online</span>
+                </div>
+                <button class="btn-icon" onclick="app.toggleVideoCall()"><i class="fa-solid fa-video"></i></button>
+            </header>
+
+            <!-- Video Call Mode -->
+            <div id="video-call-ui" class="hidden">
+                <div class="video-wrapper">
+                    <img id="call-tutor-img" src="" alt="Tutor">
+                    <div class="video-overlay"></div>
+                    <div class="sound-wave" id="ai-speaking-wave">
+                        <span></span><span></span><span></span><span></span><span></span>
+                    </div>
+                    <div class="call-controls">
+                        <button class="call-btn mute" id="mic-btn" onclick="app.toggleMic()"><i class="fa-solid fa-microphone"></i></button>
+                        <button class="call-btn end-call" onclick="app.toggleVideoCall()"><i class="fa-solid fa-phone-slash"></i></button>
+                    </div>
+                </div>
+                <div class="live-captions glass-panel">
+                    <p id="live-transcript" class="typing-text">...</p>
+                </div>
+            </div>
+
+            <!-- Chat Mode -->
+            <div class="chat-area" id="chat-messages">
+                <!-- Messages populated by JS -->
+            </div>
+
+            <div class="input-area glass-header" id="chat-input-area">
+                <button class="keyboard-btn" onclick="app.toggleKeyboard()"><i class="fa-solid fa-keyboard"></i></button>
+                
+                <div class="mic-container">
+                    <button class="mic-btn-large gradient-bg" id="record-btn" onmousedown="app.startRecording()" onmouseup="app.stopRecording()" ontouchstart="app.startRecording()" ontouchend="app.stopRecording()">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
+                    <span class="hold-text">Hold to speak</span>
+                </div>
+
+                <div class="text-input-container hidden" id="text-input-container">
+                    <input type="text" id="message-input" placeholder="Type in Spanish...">
+                    <button class="send-btn text-accent" onclick="app.sendMessage()"><i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Lesson Intro Modal -->
+        <div id="lesson-modal" class="modal-overlay hidden">
+            <div class="modal-content glass-panel">
+                <button class="close-modal" onclick="app.closeModal()"><i class="fa-solid fa-xmark"></i></button>
+                <h2 id="lesson-title">Lesson Title</h2>
+                <p class="mb-4 text-muted">Learn how to greet friends naturally in Spanish.</p>
+                <div class="lesson-goals">
+                    <div class="goal"><i class="fa-solid fa-check text-green"></i> Say hello</div>
+                    <div class="goal"><i class="fa-solid fa-check text-green"></i> Ask how someone is</div>
+                </div>
+                <button class="btn-primary w-100 mt-4" onclick="app.startLesson()">Start Lesson</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
