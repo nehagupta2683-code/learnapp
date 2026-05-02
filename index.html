@@ -97,46 +97,56 @@
                     <div class="gems-badge"><i class="fa-solid fa-gem text-accent"></i> 120</div>
                 </header>
                 
-                <div class="path-container">
-                    <!-- Unit Header -->
-                    <div class="unit-header gradient-bg">
-                        <h3>Unit 1</h3>
-                        <p>Basic Greetings & Introductions</p>
+                <div class="scroll-container p-4">
+                    <div style="text-align: center; margin-bottom: 20px;">
+                        <h2 style="font-size: 1.5rem; font-weight: 700;">Your Learning Plan</h2>
+                        <p class="text-secondary text-sm">Follow these lessons step-by-step.</p>
                     </div>
-                    
-                    <!-- Path Nodes -->
-                    <div class="path-nodes">
-                        <div class="node-wrapper completed left-1">
-                            <button class="node-btn"><i class="fa-solid fa-star"></i></button>
+
+                    <!-- Lesson 1 -->
+                    <div class="glass-panel p-4 mb-4" style="border: 2px solid var(--success);">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                            <div>
+                                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--success); font-weight: bold;">Lesson 1 • Completed</span>
+                                <h3 style="font-size: 1.2rem; margin-top: 5px;">Basic Greetings</h3>
+                            </div>
+                            <div class="score-circle" style="width: 40px; height: 40px; font-size: 1rem; border-color: var(--success); color: var(--success);">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
                         </div>
-                        <div class="node-wrapper completed right-1">
-                            <button class="node-btn"><i class="fa-solid fa-star"></i></button>
-                        </div>
-                        <div class="node-wrapper current left-1" onclick="app.openLessonModal('Greeting a Friend')">
-                            <div class="node-tooltip">Start</div>
-                            <button class="node-btn"><i class="fa-solid fa-play"></i></button>
-                        </div>
-                        <div class="node-wrapper locked right-1">
-                            <button class="node-btn"><i class="fa-solid fa-lock"></i></button>
-                        </div>
-                        <div class="node-wrapper locked center chest">
-                            <button class="node-btn"><i class="fa-solid fa-treasure-chest"></i></button>
-                        </div>
+                        <p class="text-secondary text-sm mb-3">Learn how to say hello and introduce yourself naturally.</p>
+                        <button class="btn-primary w-100" style="background: rgba(255,255,255,0.1); color: white;" onclick="app.openLessonModal('Basic Greetings (Review)')">Review Lesson</button>
                     </div>
-                    
-                    <!-- Unit Header 2 -->
-                    <div class="unit-header gradient-bg-alt">
-                        <h3>Unit 2</h3>
-                        <p>Ordering Food & Drinks</p>
+
+                    <!-- Lesson 2 -->
+                    <div class="glass-panel p-4 mb-4" style="border: 2px solid var(--accent-color); position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 0; left: 0; width: 5px; height: 100%; background: var(--accent-color);"></div>
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                            <div>
+                                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-color); font-weight: bold;">Lesson 2 • Up Next</span>
+                                <h3 style="font-size: 1.2rem; margin-top: 5px;">How are you?</h3>
+                            </div>
+                            <div class="score-circle" style="width: 40px; height: 40px; font-size: 1rem; border-color: var(--accent-color); color: var(--accent-color);">
+                                <i class="fa-solid fa-play"></i>
+                            </div>
+                        </div>
+                        <p class="text-secondary text-sm mb-3">Ask friends how they are doing and reply to them.</p>
+                        <button class="btn-primary w-100" onclick="app.openLessonModal('How are you?')">Start Lesson Now</button>
                     </div>
-                    
-                    <div class="path-nodes">
-                         <div class="node-wrapper locked left-1">
-                            <button class="node-btn"><i class="fa-solid fa-lock"></i></button>
+
+                    <!-- Lesson 3 -->
+                    <div class="glass-panel p-4 mb-4" style="opacity: 0.6;">
+                        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
+                            <div>
+                                <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); font-weight: bold;">Lesson 3 • Locked</span>
+                                <h3 style="font-size: 1.2rem; margin-top: 5px;">Ordering Food</h3>
+                            </div>
+                            <div class="score-circle" style="width: 40px; height: 40px; font-size: 1rem; border-color: var(--border-color); color: var(--text-secondary);">
+                                <i class="fa-solid fa-lock"></i>
+                            </div>
                         </div>
-                         <div class="node-wrapper locked right-1">
-                            <button class="node-btn"><i class="fa-solid fa-lock"></i></button>
-                        </div>
+                        <p class="text-secondary text-sm mb-3">Learn how to order from a menu at a local restaurant.</p>
+                        <button class="btn-primary w-100" style="background: rgba(255,255,255,0.05); color: var(--text-secondary); cursor: not-allowed;" disabled>Locked</button>
                     </div>
                 </div>
             </section>
