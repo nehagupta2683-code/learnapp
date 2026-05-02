@@ -218,8 +218,8 @@ const app = {
         
         // 1. Add user message
         chatArea.insertAdjacentHTML('beforeend', `
-            <div class="message user-message fade-in-up" id="\${msgId}">
-                <p>\${text}</p>
+            <div class="message user-message fade-in-up" id="${msgId}">
+                <p>${text}</p>
             </div>
         `);
         this.scrollToBottom();
@@ -237,8 +237,8 @@ const app = {
             // Special Hardcoded Exact Match from the Screenshot (for demo purposes)
             if (lowerText.includes("bad to speak")) {
                 setTimeout(() => {
-                    document.getElementById(msgId).innerHTML = \`<p>I'm bad <span style="color: #fca5a5; font-weight: bold;">to speak</span> English.</p>\`;
-                    this.renderAIResponse(\`Do you mean "I'm bad <span style="color: #86efac; font-weight: bold;">at speaking</span> English"?\`, "", true);
+                    document.getElementById(msgId).innerHTML = `<p>I'm bad <span style="color: #fca5a5; font-weight: bold;">to speak</span> English.</p>`;
+                    this.renderAIResponse(`Do you mean "I'm bad <span style="color: #86efac; font-weight: bold;">at speaking</span> English"?`, "", true);
                 }, 1000);
                 return;
             }
@@ -246,7 +246,7 @@ const app = {
             // Real AI Translation Engine (Free API)
             // We translate from English to the Target Language. If the user typed in English, it translates it.
             // If they typed in the Target language correctly, the API often just returns the same text.
-            const url = \`https://api.mymemory.translated.net/get?q=\${encodeURIComponent(text)}&langpair=en|\${langCode}\`;
+            const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(text)}&langpair=en|${langCode}`;
             const response = await fetch(url);
             const data = await response.json();
             
@@ -267,21 +267,21 @@ const app = {
                 
                 // Highlight the user's text in orange because it wasn't the target language
                 const userMsgEl = document.getElementById(msgId);
-                userMsgEl.innerHTML = \`<p><span style="color: #fca5a5; font-weight: bold;">\${text}</span></p>\`;
+                userMsgEl.innerHTML = `<p><span style="color: #fca5a5; font-weight: bold;">${text}</span></p>`;
                 
                 // The AI teaches them how to say it!
-                aiResponseText = \`Do you mean "<span style="color: #86efac; font-weight: bold;">\${translatedText}</span>"?\`;
+                aiResponseText = `Do you mean "<span style="color: #86efac; font-weight: bold;">${translatedText}</span>"?`;
                 aiEnglishTranslation = "Repeat this to practice your " + this.currentLanguage + "!";
             } else {
                 // PERFECT SYNTAX!
-                chatArea.insertAdjacentHTML('beforeend', \`
+                chatArea.insertAdjacentHTML('beforeend', `
                     <div class="feedback-box fade-in-up">
                          <div class="feedback-header">
                             <span class="text-green"><i class="fa-solid fa-check-circle"></i> Perfect Syntax</span>
                             <span class="pronunciation-score">Pronunciation: 95%</span>
                         </div>
                     </div>
-                 \`);
+                 `);
 
                  if (this.currentLanguage === 'French') {
                      aiResponseText = "Très bien ! Continuez à pratiquer.";
@@ -306,16 +306,16 @@ const app = {
 
     renderAIResponse(aiResponseText, aiEnglishTranslation, isCorrection) {
         const chatArea = document.getElementById('chat-messages');
-        chatArea.insertAdjacentHTML('beforeend', \`
+        chatArea.insertAdjacentHTML('beforeend', `
             <div class="message ai-message fade-in-up">
-                <p>\${aiResponseText}</p>
-                \${aiEnglishTranslation ? \`<p style="font-size: 0.85rem; color: #94a3b8; margin-top: 6px;"><em>(\${aiEnglishTranslation})</em></p>\` : ''}
+                <p>${aiResponseText}</p>
+                ${aiEnglishTranslation ? `<p style="font-size: 0.85rem; color: #94a3b8; margin-top: 6px;"><em>(${aiEnglishTranslation})</em></p>` : ''}
                 
-                \${isCorrection ? \`<div style="margin-top: 8px; font-size: 0.75rem; color: #86efac;"><i class="fa-solid fa-wand-magic-sparkles"></i> Vocabulary Learned</div>\` : ''}
+                ${isCorrection ? `<div style="margin-top: 8px; font-size: 0.75rem; color: #86efac;"><i class="fa-solid fa-wand-magic-sparkles"></i> Vocabulary Learned</div>` : ''}
                 
-                <button class="msg-audio-btn" onclick="app.speakText('\${aiResponseText.replace(/<[^>]*>?/gm, '').replace(/"/g, '&quot;')}')"><i class="fa-solid fa-volume-high"></i></button>
+                <button class="msg-audio-btn" onclick="app.speakText('${aiResponseText.replace(/<[^>]*>?/gm, '').replace(/"/g, '&quot;')}')"><i class="fa-solid fa-volume-high"></i></button>
             </div>
-        \`);
+        `);
         document.querySelector('.status-text').innerText = "Online";
         this.scrollToBottom();
         
