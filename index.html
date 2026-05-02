@@ -252,9 +252,12 @@
                         <p id="profile-email-display" class="text-secondary">user@example.com</p>
                     </div>
                     
-                    <div class="glass-panel p-3 mb-3" style="display:flex; justify-content:space-between; align-items:center;">
+                    <div class="glass-panel p-3 mb-3" style="display:flex; justify-content:space-between; align-items:center; cursor: pointer;" onclick="app.changeLanguage()">
                         <span>Target Language</span>
-                        <span id="profile-lang-display" class="text-accent" style="font-weight: bold;">Spanish</span>
+                        <div>
+                            <span id="profile-lang-display" class="text-accent" style="font-weight: bold; margin-right: 8px;">Spanish</span>
+                            <i class="fa-solid fa-chevron-right text-secondary"></i>
+                        </div>
                     </div>
 
                     <div class="glass-panel p-3 mb-4" style="display:flex; justify-content:space-between; align-items:center;">

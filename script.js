@@ -180,6 +180,20 @@ const app = {
     },
 
     // --- Onboarding Flow ---
+    changeLanguage() {
+        // Reset and show onboarding
+        document.getElementById('profile-view').classList.remove('active');
+        document.getElementById('main-app').classList.add('hidden');
+        document.getElementById('auth-view').classList.add('hidden');
+        document.getElementById('onboarding-view').classList.remove('hidden');
+        
+        // Ensure options list is shown
+        document.querySelector('.logo-large').classList.remove('hidden');
+        document.querySelector('.options-list').parentElement.classList.remove('hidden');
+        document.getElementById('level-selection').classList.add('hidden');
+        document.getElementById('building-plan').classList.add('hidden');
+    },
+
     selectLanguage(lang) {
         this.currentLanguage = lang;
         document.querySelector('.logo-large').classList.add('hidden');
@@ -197,6 +211,7 @@ const app = {
 
         // Simulate AI building plan
         setTimeout(() => {
+            document.getElementById('building-plan').classList.add('hidden');
             document.getElementById('onboarding-view').classList.add('hidden');
             document.getElementById('main-app').classList.remove('hidden');
             this.navigateMain('home-view');
