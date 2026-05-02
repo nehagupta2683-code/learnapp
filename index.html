@@ -216,20 +216,77 @@
                     </div>
                 </div>
             </section>
+            
+            <!-- Vocab View -->
+            <section id="vocab-view" class="view main-view">
+                <header class="top-header glass-header">
+                    <h2>Vocabulary</h2>
+                </header>
+                <div class="scroll-container p-4">
+                    <div class="glass-panel text-center p-4 mb-4" style="cursor:pointer;" onclick="alert('Flashcard practice starting soon!')">
+                        <h3 class="text-accent mb-2"><i class="fa-solid fa-clone"></i> Practice Flashcards</h3>
+                        <p class="text-secondary text-sm">Review words you've learned</p>
+                    </div>
+                    <h3 class="mt-4 mb-3">Saved Words (<span id="vocab-count">0</span>)</h3>
+                    <div id="vocab-list" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                        <!-- Populated by JS -->
+                        <div class="glass-panel p-3 text-center text-secondary" style="grid-column: span 2;">
+                            <p>No words saved yet.</p>
+                            <p style="font-size: 0.8rem;">Practice chatting to save words!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile View -->
+            <section id="profile-view" class="view main-view">
+                <header class="top-header glass-header">
+                    <h2>Profile & Settings</h2>
+                </header>
+                <div class="scroll-container p-4">
+                    <div class="glass-panel text-center p-4 mb-4">
+                        <div class="score-circle mx-auto mb-3" style="width: 80px; height: 80px; font-size: 2rem; border-color: var(--accent-color);">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <h3 id="profile-name-display">Learner</h3>
+                        <p id="profile-email-display" class="text-secondary">user@example.com</p>
+                    </div>
+                    
+                    <div class="glass-panel p-3 mb-3" style="display:flex; justify-content:space-between; align-items:center;">
+                        <span>Target Language</span>
+                        <span id="profile-lang-display" class="text-accent" style="font-weight: bold;">Spanish</span>
+                    </div>
+
+                    <div class="glass-panel p-3 mb-4" style="display:flex; justify-content:space-between; align-items:center;">
+                        <span>Dark Mode</span>
+                        <button class="btn-icon text-accent" onclick="alert('Light mode toggled!')"><i class="fa-solid fa-moon"></i></button>
+                    </div>
+
+                    <button class="btn-primary w-100" style="background: #ef4444; color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer;" onclick="app.logout()">Log Out</button>
+                </div>
+            </section>
 
             <!-- Bottom Navigation -->
             <nav class="bottom-nav glass-header">
                 <button class="nav-btn active" data-target="home-view">
                     <i class="fa-solid fa-map"></i>
-                    <span>Path</span>
+                    <span style="font-size: 0.65rem;">Path</span>
+                </button>
+                <button class="nav-btn" data-target="vocab-view">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span style="font-size: 0.65rem;">Vocab</span>
                 </button>
                 <button class="nav-btn" data-target="tutors-view">
                     <i class="fa-solid fa-users"></i>
-                    <span>Tutors</span>
+                    <span style="font-size: 0.65rem;">Tutors</span>
                 </button>
                 <button class="nav-btn" data-target="progress-view">
                     <i class="fa-solid fa-chart-pie"></i>
-                    <span>Progress</span>
+                    <span style="font-size: 0.65rem;">Stats</span>
+                </button>
+                <button class="nav-btn" data-target="profile-view">
+                    <i class="fa-solid fa-user"></i>
+                    <span style="font-size: 0.65rem;">Profile</span>
                 </button>
             </nav>
         </div>

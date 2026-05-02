@@ -23,7 +23,67 @@ const app = {
             document.getElementById('auth-view').classList.add('hidden');
             document.getElementById('main-app').classList.remove('hidden');
             this.navigateMain('home-view');
+            
+            // Set profile email
+            const emailEl = document.getElementById('profile-email-display');
+            if (emailEl) emailEl.innerText = user;
+            
+            // Load vocab
+            this.loadVocab();
         }
+    },
+
+    logout() {
+        localStorage.removeItem('learnstep_user');
+        window.location.reload();
+    },
+    
+    // --- Vocabulary Flow ---
+    vocabList: [],
+    
+    loadVocab() {
+        const saved = localStorage.getItem('learnstep_vocab');
+        if (saved) {
+            this.vocabList = JSON.parse(saved);
+        }
+        this.renderVocab();
+    },
+    
+    saveVocabWord(targetText, originalText) {
+        // Prevent exact duplicates
+        if (!this.vocabList.some(v => v.target.toLowerCase() === targetText.toLowerCase())) {
+            this.vocabList.unshift({
+                target: targetText,
+                original: originalText
+            });
+            localStorage.setItem('learnstep_vocab', JSON.stringify(this.vocabList));
+            this.renderVocab();
+        }
+    },
+    
+    renderVocab() {
+        const listEl = document.getElementById('vocab-list');
+        const countEl = document.getElementById('vocab-count');
+        if (!listEl || !countEl) return;
+        
+        countEl.innerText = this.vocabList.length;
+        
+        if (this.vocabList.length === 0) {
+            listEl.innerHTML = `
+                <div class="glass-panel p-3 text-center text-secondary" style="grid-column: span 2;">
+                    <p>No words saved yet.</p>
+                    <p style="font-size: 0.8rem;">Practice chatting to save words!</p>
+                </div>
+            `;
+            return;
+        }
+        
+        listEl.innerHTML = this.vocabList.map(v => `
+            <div class="glass-panel p-3" style="text-align: left;">
+                <h4 class="text-green">${v.target}</h4>
+                <p class="text-sm text-secondary">${v.original}</p>
+            </div>
+        `).join('');
     },
     
     switchAuthTab(mode) {
@@ -63,6 +123,16 @@ const app = {
         } else {
             document.getElementById('main-app').classList.remove('hidden');
             this.navigateMain('home-view');
+            this.loadVocab();
+            
+            const emailEl = document.getElementById('profile-email-display');
+            if (emailEl) emailEl.innerText = email;
+            
+            // Set name if available
+            const name = document.getElementById('auth-name') ? document.getElementById('auth-name').value : '';
+            if (name && document.getElementById('profile-name-display')) {
+                document.getElementById('profile-name-display').innerText = name;
+            }
         }
     },
 
@@ -115,6 +185,9 @@ const app = {
         document.querySelector('.logo-large').classList.add('hidden');
         document.querySelector('.options-list').parentElement.classList.add('hidden');
         document.getElementById('level-selection').classList.remove('hidden');
+        
+        const langDisplay = document.getElementById('profile-lang-display');
+        if (langDisplay) langDisplay.innerText = lang;
     },
 
     completeOnboarding(level) {
@@ -325,6 +398,9 @@ const app = {
                 // The AI teaches them how to say it!
                 aiResponseText = `Do you mean "<span style="color: #86efac; font-weight: bold;">${translatedText}</span>"?`;
                 aiEnglishTranslation = "Repeat this to practice your " + this.currentLanguage + "!";
+                
+                // Automatically save it to vocabulary!
+                this.saveVocabWord(translatedText, text);
             } else {
                 // PERFECT SYNTAX!
                 chatArea.insertAdjacentHTML('beforeend', `
