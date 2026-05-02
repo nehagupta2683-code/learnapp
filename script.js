@@ -180,18 +180,10 @@ const app = {
     },
 
     // --- Onboarding Flow ---
-    changeLanguage() {
-        // Reset and show onboarding
-        document.getElementById('profile-view').classList.remove('active');
-        document.getElementById('main-app').classList.add('hidden');
-        document.getElementById('auth-view').classList.add('hidden');
-        document.getElementById('onboarding-view').classList.remove('hidden');
-        
-        // Ensure options list is shown
-        document.querySelector('.logo-large').classList.remove('hidden');
-        document.querySelector('.options-list').parentElement.classList.remove('hidden');
-        document.getElementById('level-selection').classList.add('hidden');
-        document.getElementById('building-plan').classList.add('hidden');
+    changeLanguageFromProfile(lang) {
+        this.currentLanguage = lang;
+        // Visual confirmation could be added here
+        alert("Target language changed to " + lang + "!");
     },
 
     selectLanguage(lang) {
@@ -200,8 +192,8 @@ const app = {
         document.querySelector('.options-list').parentElement.classList.add('hidden');
         document.getElementById('level-selection').classList.remove('hidden');
         
-        const langDisplay = document.getElementById('profile-lang-display');
-        if (langDisplay) langDisplay.innerText = lang;
+        const langSelect = document.getElementById('profile-lang-select');
+        if (langSelect) langSelect.value = lang;
     },
 
     completeOnboarding(level) {
