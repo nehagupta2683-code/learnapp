@@ -89,17 +89,17 @@
         <!-- Main App Views -->
         <div id="main-app" class="hidden">
             
-            <!-- Home / Path View (Duolingo Style) -->
+            <!-- Home / Path View (Clear Lesson List Style) -->
             <section id="home-view" class="view main-view">
                 <header class="top-header glass-header">
                     <div class="streak-badge"><i class="fa-solid fa-fire text-orange"></i> 3</div>
-                    <div class="language-badge">🇪🇸 ES</div>
+                    <div id="header-lang-badge" class="language-badge">🇪🇸 ES</div>
                     <div class="gems-badge"><i class="fa-solid fa-gem text-accent"></i> 120</div>
                 </header>
                 
                 <div class="scroll-container p-4">
                     <div style="text-align: center; margin-bottom: 20px;">
-                        <h2 style="font-size: 1.5rem; font-weight: 700;">Your Learning Plan</h2>
+                        <h2 id="plan-header-title" style="font-size: 1.5rem; font-weight: 700;">Your Learning Plan</h2>
                         <p class="text-secondary text-sm">Follow these lessons step-by-step.</p>
                     </div>
 
@@ -108,7 +108,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
                             <div>
                                 <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--success); font-weight: bold;">Lesson 1 • Completed</span>
-                                <h3 style="font-size: 1.2rem; margin-top: 5px;">Basic Greetings</h3>
+                                <h3 id="lesson-1-title" style="font-size: 1.2rem; margin-top: 5px;">Basic Greetings</h3>
                             </div>
                             <div class="score-circle" style="width: 40px; height: 40px; font-size: 1rem; border-color: var(--success); color: var(--success);">
                                 <i class="fa-solid fa-check"></i>
@@ -124,7 +124,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
                             <div>
                                 <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-color); font-weight: bold;">Lesson 2 • Up Next</span>
-                                <h3 style="font-size: 1.2rem; margin-top: 5px;">How are you?</h3>
+                                <h3 id="lesson-2-title" style="font-size: 1.2rem; margin-top: 5px;">How are you?</h3>
                             </div>
                             <div class="score-circle" style="width: 40px; height: 40px; font-size: 1rem; border-color: var(--accent-color); color: var(--accent-color);">
                                 <i class="fa-solid fa-play"></i>
@@ -139,7 +139,7 @@
                         <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">
                             <div>
                                 <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-secondary); font-weight: bold;">Lesson 3 • Locked</span>
-                                <h3 style="font-size: 1.2rem; margin-top: 5px;">Ordering Food</h3>
+                                <h3 id="lesson-3-title" style="font-size: 1.2rem; margin-top: 5px;">Ordering Food</h3>
                             </div>
                             <div class="score-circle" style="width: 40px; height: 40px; font-size: 1rem; border-color: var(--border-color); color: var(--text-secondary);">
                                 <i class="fa-solid fa-lock"></i>

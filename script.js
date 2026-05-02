@@ -30,7 +30,46 @@ const app = {
             
             // Load vocab
             this.loadVocab();
+            
+            // Load language
+            const savedLang = localStorage.getItem('learnstep_lang');
+            if (savedLang) {
+                this.currentLanguage = savedLang;
+                this.updateLanguageUI(savedLang);
+            } else {
+                this.currentLanguage = 'Spanish'; // default
+                this.updateLanguageUI('Spanish');
+            }
         }
+    },
+
+    updateLanguageUI(lang) {
+        // Update profile select
+        const langSelect = document.getElementById('profile-lang-select');
+        if (langSelect) langSelect.value = lang;
+        
+        // Update home view header
+        const planHeader = document.getElementById('plan-header-title');
+        if (planHeader) planHeader.innerText = `Your ${lang} Plan`;
+        
+        // Update top badge
+        const badge = document.getElementById('header-lang-badge');
+        if (badge) {
+            let flag = '🇪🇸';
+            let short = 'ES';
+            if (lang === 'French') { flag = '🇫🇷'; short = 'FR'; }
+            if (lang === 'German') { flag = '🇩🇪'; short = 'DE'; }
+            if (lang === 'English') { flag = '🇺🇸'; short = 'EN'; }
+            badge.innerText = `${flag} ${short}`;
+        }
+        
+        // Update lesson titles dynamically
+        const l1 = document.getElementById('lesson-1-title');
+        if (l1) l1.innerText = `${lang} Greetings`;
+        const l2 = document.getElementById('lesson-2-title');
+        if (l2) l2.innerText = `Speaking ${lang}`;
+        const l3 = document.getElementById('lesson-3-title');
+        if (l3) l3.innerText = `Ordering in ${lang}`;
     },
 
     logout() {
@@ -182,18 +221,19 @@ const app = {
     // --- Onboarding Flow ---
     changeLanguageFromProfile(lang) {
         this.currentLanguage = lang;
-        // Visual confirmation could be added here
+        localStorage.setItem('learnstep_lang', lang);
+        this.updateLanguageUI(lang);
         alert("Target language changed to " + lang + "!");
     },
 
     selectLanguage(lang) {
         this.currentLanguage = lang;
+        localStorage.setItem('learnstep_lang', lang);
         document.querySelector('.logo-large').classList.add('hidden');
         document.querySelector('.options-list').parentElement.classList.add('hidden');
         document.getElementById('level-selection').classList.remove('hidden');
         
-        const langSelect = document.getElementById('profile-lang-select');
-        if (langSelect) langSelect.value = lang;
+        this.updateLanguageUI(lang);
     },
 
     completeOnboarding(level) {
@@ -367,15 +407,6 @@ const app = {
             else if (this.currentLanguage === 'German') langCode = 'de';
             else if (this.currentLanguage === 'English') langCode = 'en';
 
-            // Special Hardcoded Exact Match from the Screenshot (for demo purposes)
-            if (lowerText.includes("bad to speak")) {
-                setTimeout(() => {
-                    document.getElementById(msgId).innerHTML = `<p>I'm bad <span style="color: #fca5a5; font-weight: bold;">to speak</span> English.</p>`;
-                    this.renderAIResponse(`Do you mean "I'm bad <span style="color: #86efac; font-weight: bold;">at speaking</span> English"?`, "", true);
-                }, 1000);
-                return;
-            }
-
             // Real AI Translation Engine (Free API)
             // We translate from English to the Target Language. If the user typed in English, it translates it.
             // If they typed in the Target language correctly, the API often just returns the same text.
@@ -474,6 +505,7 @@ const app = {
             if (this.currentLanguage === 'Spanish') utterThis.lang = 'es-ES';
             else if (this.currentLanguage === 'French') utterThis.lang = 'fr-FR';
             else if (this.currentLanguage === 'German') utterThis.lang = 'de-DE';
+            else if (this.currentLanguage === 'English') utterThis.lang = 'en-US';
             else utterThis.lang = 'es-ES'; // Default fallback
             
             // Adjust voice characteristics based on tutor persona
