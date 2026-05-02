@@ -1,7 +1,7 @@
 const app = {
     currentLanguage: '',
     currentLevel: '',
-    currentTutor: 'LearnEveryStep',
+    currentTutor: 'LearnStep',
     isRecording: false,
     isVideoCallActive: false,
     keyboardMode: false,
@@ -97,7 +97,7 @@ const app = {
 
     startLesson() {
         this.closeModal();
-        this.startPractice('LearnEveryStep', 'Default');
+        this.startPractice('LearnStep', 'Default');
     },
 
     // --- Practice / Chat Area ---
@@ -106,7 +106,7 @@ const app = {
         document.getElementById('active-tutor-name').innerText = tutorName;
         
         // Image setup
-        let imgUrl = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80'; // Default LearnEveryStep
+        let imgUrl = 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80'; // Default LearnStep
         if (tutorName === 'Mateo') imgUrl = 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80';
         if (tutorName === 'Sofia') imgUrl = 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=256&q=80';
         
