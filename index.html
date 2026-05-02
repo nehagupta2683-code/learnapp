@@ -14,8 +14,48 @@
     <!-- Mobile App Container -->
     <div id="app-container">
         
+        <!-- Auth View -->
+        <section id="auth-view" class="view active full-screen-view">
+            <div class="onboarding-content">
+                <div class="logo-large mb-4">
+                    <i class="fa-solid fa-language icon-gradient"></i>
+                    <h2>LearnStep</h2>
+                </div>
+                
+                <div class="glass-panel p-4" style="text-align: left; width: 100%; max-width: 320px; margin: 0 auto;">
+                    <div class="auth-tabs" style="display: flex; margin-bottom: 20px; border-bottom: 1px solid var(--border-color);">
+                        <button id="tab-login" class="auth-tab active" onclick="app.switchAuthTab('login')" style="flex: 1; padding: 10px; background: none; border: none; color: var(--text-primary); font-weight: 600; border-bottom: 2px solid var(--accent-color); cursor: pointer;">Login</button>
+                        <button id="tab-register" class="auth-tab" onclick="app.switchAuthTab('register')" style="flex: 1; padding: 10px; background: none; border: none; color: var(--text-secondary); font-weight: 600; border-bottom: 2px solid transparent; cursor: pointer;">Register</button>
+                    </div>
+
+                    <form id="auth-form" onsubmit="event.preventDefault(); app.submitAuth();">
+                        <div id="name-field" class="input-group hidden" style="margin-bottom: 15px;">
+                            <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 5px;">Full Name</label>
+                            <input type="text" id="auth-name" placeholder="John Doe" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.2); color: white; outline: none;">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 15px;">
+                            <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 5px;">Email</label>
+                            <input type="email" id="auth-email" placeholder="john@example.com" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.2); color: white; outline: none;">
+                        </div>
+                        <div class="input-group" style="margin-bottom: 20px;">
+                            <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 5px;">Password</label>
+                            <input type="password" id="auth-password" placeholder="••••••••" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background: rgba(0,0,0,0.2); color: white; outline: none;">
+                        </div>
+                        
+                        <button type="submit" id="auth-submit-btn" class="btn-primary w-100" style="padding: 12px; font-weight: 600; font-size: 1rem; border-radius: 8px; width: 100%; cursor: pointer;">Sign In</button>
+                    </form>
+                    
+                    <div style="text-align: center; margin: 20px 0; color: var(--text-secondary); font-size: 0.85rem;">OR</div>
+                    
+                    <button class="glass-panel w-100" style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px; border: 1px solid var(--border-color); border-radius: 8px; width: 100%; cursor: pointer; color: white; background: rgba(255,255,255,0.05);" onclick="app.submitAuth()">
+                        <i class="fa-brands fa-google text-accent"></i> Continue with Google
+                    </button>
+                </div>
+            </div>
+        </section>
+
         <!-- Onboarding View -->
-        <section id="onboarding-view" class="view active full-screen-view">
+        <section id="onboarding-view" class="view hidden full-screen-view">
             <div class="onboarding-content">
                 <div class="logo-large">
                     <i class="fa-solid fa-language icon-gradient"></i>

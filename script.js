@@ -11,6 +11,59 @@ const app = {
     init() {
         this.bindEvents();
         this.initSpeech();
+        this.checkAuth();
+    },
+
+    // --- Authentication Flow ---
+    authMode: 'login', // login or register
+    
+    checkAuth() {
+        const user = localStorage.getItem('learnstep_user');
+        if (user) {
+            document.getElementById('auth-view').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+            this.navigateMain('home-view');
+        }
+    },
+    
+    switchAuthTab(mode) {
+        this.authMode = mode;
+        const loginTab = document.getElementById('tab-login');
+        const registerTab = document.getElementById('tab-register');
+        const nameField = document.getElementById('name-field');
+        const submitBtn = document.getElementById('auth-submit-btn');
+
+        if (mode === 'login') {
+            loginTab.style.borderBottom = '2px solid var(--accent-color)';
+            loginTab.style.color = 'var(--text-primary)';
+            registerTab.style.borderBottom = '2px solid transparent';
+            registerTab.style.color = 'var(--text-secondary)';
+            nameField.classList.add('hidden');
+            submitBtn.innerText = 'Sign In';
+        } else {
+            registerTab.style.borderBottom = '2px solid var(--accent-color)';
+            registerTab.style.color = 'var(--text-primary)';
+            loginTab.style.borderBottom = '2px solid transparent';
+            loginTab.style.color = 'var(--text-secondary)';
+            nameField.classList.remove('hidden');
+            submitBtn.innerText = 'Create Account';
+        }
+    },
+    
+    submitAuth() {
+        const email = document.getElementById('auth-email') ? document.getElementById('auth-email').value : 'user@example.com';
+        // Simulate saving user
+        localStorage.setItem('learnstep_user', email);
+        
+        document.getElementById('auth-view').classList.add('hidden');
+        
+        // Check if returning user or new user (simulated)
+        if (this.authMode === 'register') {
+            document.getElementById('onboarding-view').classList.remove('hidden');
+        } else {
+            document.getElementById('main-app').classList.remove('hidden');
+            this.navigateMain('home-view');
+        }
     },
 
     initSpeech() {
